@@ -6,6 +6,7 @@ from time import sleep
 from logging import getLogger
 
 from packy.game_objects import Background
+from packy.settings import Settings
 
 logger = getLogger(__name__)
 
@@ -14,9 +15,11 @@ class Engine:
 
     update: datetime
     running: bool = True
+    settings: Settings
 
-    def __init__(self: Engine):
+    def __init__(self: Engine, settings: Settings = Settings()):
         self.update = datetime.now()
+        self.settings = settings
 
     def stop(self: Engine) -> None:
         logger.info("Stopping engine")
@@ -25,9 +28,12 @@ class Engine:
     def run(self: Engine) -> None:
         logger.info("Starting engine")
         root = Tk()
-        # root.attributes("-fullscreen", True)
 
-        canvas = Canvas(root, width=800, height=600)
+        canvas = Canvas(
+            root,
+            width=self.settings.width,
+            height=self.settings.height
+        )
         canvas.pack(expand=True)
 
         game_objects = [
