@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 
+
+@dataclass
 class RelativeCoordinate:
     """
     Relative coordinates are used to have a screen size independent coordinate system.
@@ -32,6 +35,7 @@ class RelativeCoordinate:
         return self.y_position
 
 
+@dataclass
 class AbsoluteCoordinate:
     """
     An absolute coordinate is used to reference an actual position on the canvas.
@@ -40,13 +44,3 @@ class AbsoluteCoordinate:
     x_position: int
 
     y_position: int
-
-    def __init__(self: AbsoluteCoordinate, x_position: int, y_position: int):
-        self.x_position = x_position
-        self.y_position = y_position
-
-    def get_x(self: AbsoluteCoordinate) -> int:
-        return self.x_position
-
-    def get_y(self: AbsoluteCoordinate) -> int:
-        return self.y_position

@@ -5,8 +5,10 @@ from datetime import datetime
 from time import sleep
 from logging import getLogger
 
-from packy.game_objects import Background
-from packy.settings import Settings
+from .game_objects import Background
+from .settings import Settings
+from .coordinate_system import CoordinateSystem
+from .context import Context
 
 logger = getLogger(__name__)
 
@@ -36,8 +38,15 @@ class Engine:
         )
         canvas.pack(expand=True)
 
+        coordinate_system = CoordinateSystem(self.settings)
+
+        context = Context(
+            coordinate_system,
+            self.settings
+        )
+
         game_objects = [
-            Background()
+            Background(context)
         ]
         root.protocol("WM_DELETE_WINDOW", self.stop)
 
