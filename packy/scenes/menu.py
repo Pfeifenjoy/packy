@@ -12,7 +12,7 @@ from packy.game_objects.text import Text
 from packy.scene import Scene
 
 
-class Menu(Scene, StructuralGameObject):
+class Menu(StructuralGameObject, Scene):
 
     def __init__(
             self: Menu,
