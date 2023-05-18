@@ -18,7 +18,8 @@ class Scene(GameObject):
         super().__init__(context)
 
         self.rectangle = Rectangle(
-            context, Box(Vector(0, 0), Vector(100, 100))
+            context, Box(Vector(0, 0), Vector(100, 100)),
+            fill="white", outline="white"
         )
 
     @abstractmethod
