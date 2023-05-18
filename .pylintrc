@@ -1,3 +1,4 @@
 [MASTER]
-disable=C0114,C0115,C0116
+disable=C0114,C0115,C0116,R0913,too-few-public-methods
 extension-pkg-whitelist=pydantic
+good-names=x,y
