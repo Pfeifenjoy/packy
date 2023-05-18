@@ -10,6 +10,7 @@ from .coordinate_system import CoordinateSystem
 from .context import Context
 from .mouse_system import MouseSystem
 from .scene_manager import SceneManager
+from .key_system import KeySystem
 
 logger = getLogger(__name__)
 
@@ -41,10 +42,12 @@ class Engine:
 
         coordinate_system = CoordinateSystem(self.settings)
         mouse_system = MouseSystem(canvas, coordinate_system)
+        key_system = KeySystem(root)
 
         context = Context(
             coordinate_system,
             mouse_system,
+            key_system,
             self.settings
         )
 

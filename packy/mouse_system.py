@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Set
-from tkinter import Canvas
+from typing import Set
+from tkinter import Canvas, Event
 from abc import ABC, abstractmethod
 
 from .vector import Vector
@@ -49,7 +49,7 @@ class MouseSystem:
         canvas.bind("<Motion>", self.motion)
         canvas.bind("<Button-1>", self.click)
 
-    def motion(self: MouseSystem, event: Any) -> None:
+    def motion(self: MouseSystem, event: Event) -> None:
         new_cursor_position = self.coordinate_system.relative(Vector(event.x, event.y))
 
         for motion_handler in self.motion_handlers:
@@ -59,7 +59,7 @@ class MouseSystem:
 
         self.cursor_position = new_cursor_position
 
-    def click(self: MouseSystem, event: Any) -> None:
+    def click(self: MouseSystem, event: Event) -> None:
         point = self.coordinate_system.relative(Vector(event.x, event.y))
 
         handlers = [handler for handler in self.click_handlers if handler.cares(point)]
