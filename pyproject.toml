@@ -4,6 +4,12 @@ version = "0.0.0"
 description = ""
 authors = ["Arwed Mett <arwed@amazon.com>"]
 readme = "README.md"
+packages = [
+	{ include = "packy" }
+]
+
+[tool.poetry.scripts]
+packy = "packy.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
