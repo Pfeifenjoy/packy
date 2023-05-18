@@ -92,6 +92,6 @@ class Button(StructuralGameObject, MotionHandler):
 
     def handle_motion(self: Button, start: Vector, end: Vector) -> None:
         if self.box.inside(end):
-            self.rectangle.fill = "green"
+            self.rectangle.fill = "#9C92CD"
         else:
             self.rectangle.fill = "#B4ADD9"
