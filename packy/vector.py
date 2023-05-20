@@ -3,25 +3,25 @@ from __future__ import annotations
 
 class Vector:
 
-    _x: int
+    x: int
 
-    _y: int
+    y: int
 
     def __init__(self: Vector, x: int, y: int) -> None:
         self.set_x(x)
         self.set_y(y)
 
     def get_x(self: Vector) -> int:
-        return self._x
+        return self.x
 
     def get_y(self: Vector) -> int:
-        return self._y
+        return self.y
 
     def set_x(self: Vector, x: int) -> None:
-        self._x = x
+        self.x = x
 
     def set_y(self: Vector, y: int) -> None:
-        self._y = y
+        self.y = y
 
     def add(self: Vector, other: Vector) -> Vector:
         return Vector(
@@ -39,6 +39,12 @@ class Vector:
         return Vector(
             int(self.get_x() * scale),
             int(self.get_y() * scale)
+        )
+
+    def multiply(self: Vector, other: Vector) -> Vector:
+        return Vector(
+            self.get_x() * other.get_x(),
+            self.get_y() * other.get_y()
         )
 
     def __str__(self: Vector) -> str:

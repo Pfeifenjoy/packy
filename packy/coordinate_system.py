@@ -45,3 +45,9 @@ class CoordinateSystem:
 
     def relative_y(self: CoordinateSystem, y: int) -> int:
         return int((y / self.settings.height) * 100)
+
+    def quad(self: CoordinateSystem, x: int) -> Vector:
+        return Vector(
+            x,
+            int(x * (self.settings.width / self.settings.height))
+        )
