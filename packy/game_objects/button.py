@@ -8,25 +8,25 @@ from packy.context import Context
 from packy.shapes import Box
 from packy.shape import Shape
 from packy.mouse_system import MotionHandler, ClickHandler
-from packy.vector import Vector
+from packy.vector import RelativeVector
 
 from .rectangle import Rectangle
 from .text import Text
 
 
 class ButtonClickHandler(ClickHandler):
-    on_click: Callable[[Vector], None]
+    on_click: Callable[[RelativeVector], None]
     shape: Shape
 
     def __init__(
             self: ButtonClickHandler,
             shape: Shape,
-            on_click: Callable[[Vector], None]
+            on_click: Callable[[RelativeVector], None]
     ) -> None:
         self.on_click = on_click
         self.shape = shape
 
-    def handle_click(self: ButtonClickHandler, point: Vector) -> None:
+    def handle_click(self: ButtonClickHandler, point: RelativeVector) -> None:
         self.on_click(point)
 
     def get_shape(self: ButtonClickHandler) -> Shape:
@@ -45,7 +45,7 @@ class Button(StructuralGameObject, MotionHandler):
             context: Context,
             box: Box,
             text: str,
-            on_click: Callable[[Vector], None],
+            on_click: Callable[[RelativeVector], None],
             font: Optional[Font] = None
     ) -> None:
         super().__init__(context)
@@ -63,7 +63,7 @@ class Button(StructuralGameObject, MotionHandler):
                 context,
                 self.box.center(),
                 text,
-                font or Font(size=context.coordinate_system.translate_y(3))
+                font or Font(size=context.coordinate_system.absolute_y(0.03))
             )
         )
 
@@ -90,7 +90,7 @@ class Button(StructuralGameObject, MotionHandler):
     def get_shape(self: Button) -> Shape:
         return self.box
 
-    def handle_motion(self: Button, start: Vector, end: Vector) -> None:
+    def handle_motion(self: Button, start: RelativeVector, end: RelativeVector) -> None:
         if self.box.inside(end):
             self.rectangle.fill = "#9C92CD"
         else:

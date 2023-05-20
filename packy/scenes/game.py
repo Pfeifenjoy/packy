@@ -4,7 +4,7 @@ from packy.scene import Scene
 from packy.game_object import StructuralGameObject
 from packy.context import Context
 from packy.game_objects import Character, Background
-from packy.vector import Vector
+from packy.vector import RelativeVector
 
 
 class Game(StructuralGameObject, Scene):
@@ -15,7 +15,7 @@ class Game(StructuralGameObject, Scene):
         self.add_child(Background(context))
         self.add_child(Character(
             context,
-            Vector(50, 50)
+            RelativeVector(0.5, 0.5)
         ))
 
     def get_name(self: Game) -> str:

@@ -4,7 +4,7 @@ from tkinter import Canvas, Event
 
 from packy.game_object import GameObject
 from packy.context import Context
-from packy.vector import Vector
+from packy.vector import RelativeVector
 from packy.shapes import Box
 
 from .rectangle import Rectangle
@@ -12,19 +12,19 @@ from .rectangle import Rectangle
 
 class Character(GameObject):
 
-    center: Vector
-    dimension: Vector
-    step_size = 1
+    center: RelativeVector
+    dimension: RelativeVector
+    step_size: float = 0.01
 
     def __init__(
             self: Character,
             context: Context,
-            start_position: Vector
+            start_position: RelativeVector
     ) -> None:
         super().__init__(context)
 
         self.center = start_position
-        self.dimension = self.context.coordinate_system.quad(5)
+        self.dimension = self.context.coordinate_system.quad(0.05)
         print(self.dimension)
 
     def mount(self: Character) -> None:
@@ -34,21 +34,21 @@ class Character(GameObject):
         self.context.key_system.unregister_keypress_handler(self.handle_keyevent)
 
     def handle_keyevent(self: Character, event: Event) -> None:
-        step = Vector(self.step_size, self.step_size)
+        step = RelativeVector(self.step_size, self.step_size)
 
         match event.keysym:
             case "Up":
-                step = step.multiply(Vector(0, -1))
+                step = step.multiply(RelativeVector(0, -1))
             case "Down":
-                step = step.multiply(Vector(0, 1))
+                step = step.multiply(RelativeVector(0, 1))
             case "Left":
-                step = step.multiply(Vector(-1, 0))
+                step = step.multiply(RelativeVector(-1, 0))
             case "Right":
-                step = step.multiply(Vector(1, 0))
+                step = step.multiply(RelativeVector(1, 0))
 
         self.center = self.center.add(step)
 
-    def get_position(self: Character) -> Vector:
+    def get_position(self: Character) -> RelativeVector:
         return self.center.minus(self.dimension.scale(0.5))
 
     def draw(self: Character, canvas: Canvas) -> None:

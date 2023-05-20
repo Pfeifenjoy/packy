@@ -6,7 +6,7 @@ from tkinter import Canvas
 from .context import Context
 from .game_object import GameObject
 from .game_objects import Rectangle
-from .vector import Vector
+from .vector import RelativeVector
 from .shapes import Box
 
 
@@ -18,7 +18,7 @@ class Scene(GameObject):
         super().__init__(context)
 
         self.rectangle = Rectangle(
-            context, Box(Vector(0, 0), Vector(100, 100)),
+            context, Box(RelativeVector(0, 0), RelativeVector(1, 1)),
             fill="white", outline="white"
         )
 

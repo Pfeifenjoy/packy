@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .settings import Settings
-from .vector import Vector
+from .vector import RelativeVector, AbsoluteVector
 
 
 class CoordinateSystem:
@@ -10,14 +10,14 @@ class CoordinateSystem:
     def __init__(self: CoordinateSystem, settings: Settings):
         self.settings = settings
 
-    def absolute(self: CoordinateSystem, vector: Vector) -> Vector:
-        return Vector(
+    def absolute(self: CoordinateSystem, vector: RelativeVector) -> AbsoluteVector:
+        return AbsoluteVector(
             self.get_x(vector.get_x()),
             self.get_y(vector.get_y())
         )
 
-    def relative(self: CoordinateSystem, vector: Vector) -> Vector:
-        return Vector(
+    def relative(self: CoordinateSystem, vector: AbsoluteVector) -> RelativeVector:
+        return RelativeVector(
             self.relative_x(vector.get_x()),
             self.relative_y(vector.get_y())
         )
@@ -28,26 +28,26 @@ class CoordinateSystem:
     def get_height(self: CoordinateSystem) -> int:
         return self.settings.height
 
-    def get_x(self: CoordinateSystem, x_position: int) -> int:
-        return self.translate_x(x_position)
+    def get_x(self: CoordinateSystem, x_position: float) -> int:
+        return self.absolute_x(x_position)
 
-    def get_y(self: CoordinateSystem, y_position: int) -> int:
-        return self.translate_y(y_position)
+    def get_y(self: CoordinateSystem, y_position: float) -> int:
+        return self.absolute_y(y_position)
 
-    def translate_x(self: CoordinateSystem, x_value: int) -> int:
-        return int(self.settings.width * (x_value / 100))
+    def absolute_x(self: CoordinateSystem, x: float) -> int:
+        return int(self.settings.width * x)
 
-    def translate_y(self: CoordinateSystem, y_value: int) -> int:
-        return int(self.settings.height * (y_value / 100))
+    def absolute_y(self: CoordinateSystem, y: float) -> int:
+        return int(self.settings.height * y)
 
-    def relative_x(self: CoordinateSystem, x: int) -> int:
-        return int((x / self.settings.width) * 100)
+    def relative_x(self: CoordinateSystem, x: int) -> float:
+        return x / self.settings.width
 
-    def relative_y(self: CoordinateSystem, y: int) -> int:
-        return int((y / self.settings.height) * 100)
+    def relative_y(self: CoordinateSystem, y: int) -> float:
+        return y / self.settings.height
 
-    def quad(self: CoordinateSystem, x: int) -> Vector:
-        return Vector(
+    def quad(self: CoordinateSystem, x: float) -> RelativeVector:
+        return RelativeVector(
             x,
-            int(x * (self.settings.width / self.settings.height))
+            x * (self.settings.width / self.settings.height)
         )

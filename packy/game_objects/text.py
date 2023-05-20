@@ -6,18 +6,18 @@ from typing import Optional
 
 from packy.game_object import GameObject
 from packy.context import Context
-from packy.vector import Vector
+from packy.vector import RelativeVector
 
 
 class Text(GameObject):
-    position: Vector
+    position: RelativeVector
     text: str
     font: Font
 
     def __init__(
             self: Text,
             context: Context,
-            position: Vector,
+            position: RelativeVector,
             text: str,
             font: Optional[Font]
     ) -> None:
@@ -25,7 +25,9 @@ class Text(GameObject):
 
         self.position = position
         self.text = text
-        self.font = font or Font(size=self.context.coordinate_system.translate_y(3))
+        self.font = font or Font(
+            size=self.context.coordinate_system.absolute_y(0.03)
+        )
 
     def draw(self: Text, canvas: Canvas) -> None:
         position = self.context.coordinate_system.absolute(self.position)

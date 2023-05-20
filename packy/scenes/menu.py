@@ -5,7 +5,7 @@ from typing import Callable
 
 from packy.game_object import StructuralGameObject
 from packy.context import Context
-from packy.vector import Vector
+from packy.vector import RelativeVector
 from packy.shapes import Box
 from packy.game_objects.button import Button
 from packy.game_objects.text import Text
@@ -24,9 +24,9 @@ class Menu(StructuralGameObject, Scene):
         self.add_child(
             Text(
                 context,
-                Vector(50, 20),
+                RelativeVector(0.5, 0.2),
                 "Packy",
-                font=Font(size=self.context.coordinate_system.translate_y(10))
+                font=Font(size=self.context.coordinate_system.absolute_y(0.1))
             )
         )
 
@@ -34,8 +34,8 @@ class Menu(StructuralGameObject, Scene):
             Button(
                 context,
                 Box(
-                    Vector(int(100/3), 35),
-                    Vector(int(100/3), 10)
+                    RelativeVector(1/3, 0.35),
+                    RelativeVector(1/3, 0.10)
                 ),
                 "Start",
                 lambda point: on_play()
