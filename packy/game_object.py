@@ -6,9 +6,10 @@ from typing import List
 
 from .context import Context
 from .update import Update
+from .drawable import Drawable
 
 
-class GameObject(ABC):
+class GameObject(Drawable, ABC):
     """
     Game objects have a state and can be rendered.
     """
@@ -21,11 +22,6 @@ class GameObject(ABC):
     def update(self: GameObject, update: Update) -> None:
         """
         Updates the state of the object.
-        """
-
-    def draw(self: GameObject, canvas: Canvas) -> None:
-        """
-        Lets the game object draw itself to the canvas.
         """
 
     def mount(self: GameObject) -> None:
