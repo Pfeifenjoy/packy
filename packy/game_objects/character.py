@@ -1,20 +1,29 @@
 from __future__ import annotations
 
 from tkinter import Canvas, Event
+from datetime import timedelta
+from logging import getLogger
 
 from packy.game_object import GameObject
 from packy.context import Context
 from packy.vector import RelativeVector
 from packy.shapes import Box
+from packy.update import Update
 
 from .rectangle import Rectangle
+
+
+logger = getLogger(__name__)
 
 
 class Character(GameObject):
 
     center: RelativeVector
     dimension: RelativeVector
-    step_size: float = 0.01
+
+    speed: float = 1000000 # cord / sec
+
+    direction: RelativeVector = RelativeVector(0, 0)
 
     def __init__(
             self: Character,
@@ -24,32 +33,46 @@ class Character(GameObject):
         super().__init__(context)
 
         self.center = start_position
-        self.dimension = self.context.coordinate_system.quad(0.05)
+        self.dimension = self.context.coordinate_system.quad(50000)
         print(self.dimension)
 
     def mount(self: Character) -> None:
-        self.context.key_system.register_keypress_handler(self.handle_keyevent)
+        self.context.key_system.register_keypress_handler(self.handle_keypress)
+        self.context.key_system.register_keyrelease_handler(self.handle_keyrelease)
 
     def unmount(self: Character) -> None:
-        self.context.key_system.unregister_keypress_handler(self.handle_keyevent)
+        self.context.key_system.unregister_keypress_handler(self.handle_keypress)
+        self.context.key_system.unregister_keyrelease_handler(self.handle_keyrelease)
 
-    def handle_keyevent(self: Character, event: Event) -> None:
-        step = RelativeVector(self.step_size, self.step_size)
-
+    def get_key_direction(self: Character, event: Event) -> RelativeVector:
         match event.keysym:
             case "Up":
-                step = step.multiply(RelativeVector(0, -1))
+                return RelativeVector(0, -1)
             case "Down":
-                step = step.multiply(RelativeVector(0, 1))
+                return RelativeVector(0, 1)
             case "Left":
-                step = step.multiply(RelativeVector(-1, 0))
+                return RelativeVector(-1, 0)
             case "Right":
-                step = step.multiply(RelativeVector(1, 0))
+                return RelativeVector(1, 0)
+            case _:
+                return RelativeVector(0, 0)
 
-        self.center = self.center.add(step)
+    def handle_keypress(self: Character, event: Event) -> None:
+        self.direction = self.direction.add(self.get_key_direction(event))
+
+    def handle_keyrelease(self: Character, event: Event) -> None:
+        self.direction = self.direction.minus(self.get_key_direction(event))
+
+    def get_motion(self: Character, elapsed_time: timedelta) -> RelativeVector:
+        return self.direction.resize(int(self.speed * (elapsed_time.microseconds / 1000000)))
 
     def get_position(self: Character) -> RelativeVector:
         return self.center.minus(self.dimension.scale(0.5))
+
+    def update(self: Character, update: Update) -> None:
+        self.center = self.center.add(
+            self.get_motion(update.elapsed_time)
+        )
 
     def draw(self: Character, canvas: Canvas) -> None:
 

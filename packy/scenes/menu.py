@@ -24,9 +24,9 @@ class Menu(StructuralGameObject, Scene):
         self.add_child(
             Text(
                 context,
-                RelativeVector(0.5, 0.2),
+                RelativeVector(500000, 200000),
                 "Packy",
-                font=Font(size=self.context.coordinate_system.absolute_y(0.1))
+                font=Font(size=self.context.coordinate_system.absolute_y(100000))
             )
         )
 
@@ -34,8 +34,8 @@ class Menu(StructuralGameObject, Scene):
             Button(
                 context,
                 Box(
-                    RelativeVector(1/3, 0.35),
-                    RelativeVector(1/3, 0.10)
+                    RelativeVector(int(1000000/3), 350000),
+                    RelativeVector(int(1000000/3), 100000)
                 ),
                 "Start",
                 lambda point: on_play()

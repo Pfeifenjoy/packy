@@ -28,26 +28,29 @@ class CoordinateSystem:
     def get_height(self: CoordinateSystem) -> int:
         return self.settings.height
 
-    def get_x(self: CoordinateSystem, x_position: float) -> int:
+    def get_x(self: CoordinateSystem, x_position: int) -> int:
         return self.absolute_x(x_position)
 
-    def get_y(self: CoordinateSystem, y_position: float) -> int:
+    def get_y(self: CoordinateSystem, y_position: int) -> int:
         return self.absolute_y(y_position)
 
-    def absolute_x(self: CoordinateSystem, x: float) -> int:
-        return int(self.settings.width * x)
+    def absolute_x(self: CoordinateSystem, x: int) -> int:
+        return int(self.settings.width * (x / 1000000))
 
-    def absolute_y(self: CoordinateSystem, y: float) -> int:
-        return int(self.settings.height * y)
+    def absolute_y(self: CoordinateSystem, y: int) -> int:
+        return int(self.settings.height * (y / 1000000))
 
-    def relative_x(self: CoordinateSystem, x: int) -> float:
-        return x / self.settings.width
+    def relative_x(self: CoordinateSystem, x: int) -> int:
+        return int(x / self.settings.width * 1000000)
 
-    def relative_y(self: CoordinateSystem, y: int) -> float:
-        return y / self.settings.height
+    def relative_y(self: CoordinateSystem, y: int) -> int:
+        return int(y / self.settings.height * 1000000)
 
-    def quad(self: CoordinateSystem, x: float) -> RelativeVector:
+    def quad(self: CoordinateSystem, x: int) -> RelativeVector:
         return RelativeVector(
             x,
-            x * (self.settings.width / self.settings.height)
+            int(x * self.get_ratio())
         )
+
+    def get_ratio(self: CoordinateSystem) -> float:
+        return self.settings.width / self.settings.height

@@ -3,10 +3,14 @@ from __future__ import annotations
 from typing import Set
 from tkinter import Canvas, Event
 from abc import ABC, abstractmethod
+from logging import getLogger
 
 from .vector import RelativeVector, AbsoluteVector
 from .shape import Shape
 from .coordinate_system import CoordinateSystem
+
+
+logger = getLogger(__name__)
 
 
 class Handler(ABC):
@@ -62,9 +66,19 @@ class MouseSystem:
         self.cursor_position = new_cursor_position
 
     def click(self: MouseSystem, event: Event) -> None:
-        point = self.coordinate_system.relative(AbsoluteVector(event.x, event.y))
+        point = self.coordinate_system.relative(
+            AbsoluteVector(event.x, event.y)
+        )
 
-        handlers = [handler for handler in self.click_handlers if handler.cares(point)]
+        logger.debug(
+            "Click event at absolute (%s, %s) relative (%s, %s)",
+            event.x, event.y,
+            point.get_x(), point.get_y()
+        )
+
+        handlers = [
+            handler for handler in self.click_handlers if handler.cares(point)
+        ]
 
         for handler in handlers:
             handler.handle_click(point)

@@ -63,7 +63,7 @@ class Button(StructuralGameObject, MotionHandler):
                 context,
                 self.box.center(),
                 text,
-                font or Font(size=context.coordinate_system.absolute_y(0.03))
+                font or Font(size=context.coordinate_system.absolute_y(30000))
             )
         )
 

@@ -26,7 +26,7 @@ class Text(GameObject):
         self.position = position
         self.text = text
         self.font = font or Font(
-            size=self.context.coordinate_system.absolute_y(0.03)
+            size=self.context.coordinate_system.absolute_y(30000)
         )
 
     def draw(self: Text, canvas: Canvas) -> None:

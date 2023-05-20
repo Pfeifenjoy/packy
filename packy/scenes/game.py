@@ -15,7 +15,7 @@ class Game(StructuralGameObject, Scene):
         self.add_child(Background(context))
         self.add_child(Character(
             context,
-            RelativeVector(0.5, 0.5)
+            RelativeVector(500000, 500000)
         ))
 
     def get_name(self: Game) -> str:
