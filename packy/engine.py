@@ -11,6 +11,7 @@ from .context import Context
 from .mouse_system import MouseSystem
 from .scene_manager import SceneManager
 from .key_system import KeySystem
+from .update import Update
 
 logger = getLogger(__name__)
 
@@ -56,9 +57,17 @@ class Engine:
 
         scene_manager.mount()
 
+        last_update = datetime.now()
+
         while self.running:
 
-            scene_manager.update()
+            now = datetime.now()
+            update = Update(
+                now - last_update
+            )
+            last_update = now
+
+            scene_manager.update(update)
             scene_manager.draw(canvas)
 
             root.update()

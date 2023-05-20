@@ -5,6 +5,7 @@ from tkinter import Canvas
 from typing import List
 
 from .context import Context
+from .update import Update
 
 
 class GameObject(ABC):
@@ -17,7 +18,7 @@ class GameObject(ABC):
     def __init__(self: GameObject, context: Context) -> None:
         self.context = context
 
-    def update(self: GameObject) -> None:
+    def update(self: GameObject, update: Update) -> None:
         """
         Updates the state of the object.
         """
@@ -47,9 +48,9 @@ class StructuralGameObject(GameObject, ABC):
 
         self.children = []
 
-    def update(self: StructuralGameObject) -> None:
+    def update(self: StructuralGameObject, update: Update) -> None:
         for child in self.children:
-            child.update()
+            child.update(update)
 
     def draw(self: StructuralGameObject, canvas: Canvas) -> None:
         for child in self.children:

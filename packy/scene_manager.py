@@ -3,11 +3,11 @@ from __future__ import annotations
 from tkinter import Canvas
 from logging import getLogger
 
-from packy.game_object import GameObject
-from packy.context import Context
-from packy.scene import Scene
-
+from .game_object import GameObject
+from .context import Context
+from .scene import Scene
 from .scenes import Menu, Game
+from .update import Update
 
 
 logger = getLogger(__name__)
@@ -24,8 +24,8 @@ class SceneManager(GameObject):
     def start_game(self: SceneManager) -> None:
         self.update_scene(Game(self.context))
 
-    def update(self: SceneManager) -> None:
-        self.scene.update()
+    def update(self: SceneManager, update: Update) -> None:
+        self.scene.update(update)
 
     def draw(self: SceneManager, canvas: Canvas) -> None:
         self.scene.draw(canvas)
