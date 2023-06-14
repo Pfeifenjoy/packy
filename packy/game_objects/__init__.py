@@ -3,6 +3,8 @@ from .button import Button
 from .rectangle import Rectangle
 from .text import Text
 from .character import Character
+from .package import Package
+from .package_mount import PackageMount
 
 
 __all__ = [
@@ -10,5 +12,7 @@ __all__ = [
     "Button",
     "Rectangle",
     "Text",
-    "Character"
+    "Character",
+    "Package",
+    "PackageMount"
 ]
