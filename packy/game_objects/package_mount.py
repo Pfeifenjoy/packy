@@ -23,7 +23,6 @@ class PackageMount(GameObject):
     cursor: int
     velocity: int
 
-
     def __init__(self: PackageMount, context: Context) -> None:
         super().__init__(context)
         self.packages = set()
@@ -33,7 +32,7 @@ class PackageMount(GameObject):
         self.package_height = int(self.package_width * self.context.coordinate_system.get_ratio())
 
         self.cursor = 0
-        self.velocity = 50000 # cords / sec
+        self.velocity = 50000  # cords / sec
 
     def destroy_package(self: PackageMount, package: Package) -> None:
         self.packages.remove(package)

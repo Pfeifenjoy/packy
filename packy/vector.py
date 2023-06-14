@@ -3,11 +3,10 @@ from __future__ import annotations
 from math import sqrt
 
 
-
 class RelativeVector:
 
-    x: int # between 0 and 1000000
-    y: int # between 0 and 1000000
+    x: int  # between 0 and 1000000
+    y: int  # between 0 and 1000000
 
     def __init__(self: RelativeVector, x: int, y: int) -> None:
         self.set_x(x)

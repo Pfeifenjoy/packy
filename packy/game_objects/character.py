@@ -21,7 +21,7 @@ class Character(GameObject):
     center: RelativeVector
     dimension: RelativeVector
 
-    speed: float = 200000 # cord / sec
+    speed: float = 200000  # cord / sec
 
     direction: RelativeVector = RelativeVector(0, 0)
 

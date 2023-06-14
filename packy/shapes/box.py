@@ -14,7 +14,6 @@ class Box(Shape):
         self.position = position
         self.dimensions = dimensions
 
-
     def inside(self: Box, point: RelativeVector) -> bool:
         return point.get_x() >= self.position.get_x() \
             and point.get_y() >= self.position.get_y() \

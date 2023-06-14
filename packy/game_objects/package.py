@@ -40,7 +40,9 @@ class Package(GameObject):
         self.direction = RelativeVector(0, 1)
 
     def get_motion(self: Package, update: Update) -> RelativeVector:
-        return self.direction.resize(int(self.velocity * (update.elapsed_time.microseconds / 1000000)))
+        return self.direction.resize(
+            int(self.velocity * (update.elapsed_time.microseconds / 1000000))
+        )
 
     def update(self: Package, update: Update) -> None:
         self.position = self.position.add(self.get_motion(update))

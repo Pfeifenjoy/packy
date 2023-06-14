@@ -24,13 +24,11 @@ class Actor(Collidable):
         raise NotImplementedError()
 
 
-
 class CollisionSystem:
     coordinate_system: CoordinateSystem
 
     collidables: Set[Collidable]
     actors: Set[Actor]
-
 
     def __init__(self: CollisionSystem, coordinate_system: CoordinateSystem) -> None:
         self.coordinate_system = coordinate_system
