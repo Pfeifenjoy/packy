@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Set
 from random import randint
 from tkinter import Canvas
+from logging import getLogger
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -10,6 +11,9 @@ from packy.update import Update
 from packy.vector import RelativeVector
 
 from .package import Package
+
+
+logger = getLogger(__name__)
 
 
 class PackageMount(GameObject):
@@ -35,9 +39,11 @@ class PackageMount(GameObject):
         self.velocity = 50000  # cords / sec
 
     def destroy_package(self: PackageMount, package: Package) -> None:
+        logger.info("Destroy package.")
         self.packages.remove(package)
 
     def generate_package(self: PackageMount) -> Package:
+        logger.info("Generate package.")
         location = randint(0, self.positions)
         position = RelativeVector(
             int(location * self.package_width),
