@@ -34,7 +34,6 @@ class Character(GameObject):
 
         self.center = start_position
         self.dimension = self.context.coordinate_system.quad(50000)
-        print(self.dimension)
 
     def mount(self: Character) -> None:
         self.context.key_system.register_keypress_handler(self.handle_keypress)
