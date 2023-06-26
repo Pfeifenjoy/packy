@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tkinter.font import Font
 from typing import Callable
 
 from packy.game_object import StructuralGameObject
@@ -26,7 +25,6 @@ class Menu(StructuralGameObject, Scene):
                 context,
                 RelativeVector(500000, 200000),
                 "Packy",
-                font=Font(size=self.context.coordinate_system.absolute_y(100000))
             )
         )
 

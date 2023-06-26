@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Optional
-from tkinter import Canvas
+from pygame import Surface, draw, Rect, Color
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -26,15 +26,13 @@ class Rectangle(GameObject):
         self.fill = fill
         self.outline = outline
 
-    def draw(self: Rectangle, canvas: Canvas) -> None:
+    def draw(self: Rectangle, canvas: Surface) -> None:
         absolute_position = self.context.coordinate_system.absolute(self.box.position)
         absolute_dimensions = self.context.coordinate_system.absolute(self.box.dimensions)
 
-        canvas.create_rectangle(
+        draw.rect(canvas, Color(0, 0, 0), Rect(
             absolute_position.get_x(),
             absolute_position.get_y(),
             absolute_position.add(absolute_dimensions).get_x(),
-            absolute_position.add(absolute_dimensions).get_y(),
-            fill=self.fill or "white",
-            outline=self.outline or "black"
-        )
+            absolute_position.add(absolute_dimensions).get_y()
+        ))

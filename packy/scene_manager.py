@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tkinter import Canvas
+from pygame import Surface
 from logging import getLogger
 
 from .game_object import GameObject
@@ -27,7 +27,7 @@ class SceneManager(GameObject):
     def update(self: SceneManager, update: Update) -> None:
         self.scene.update(update)
 
-    def draw(self: SceneManager, canvas: Canvas) -> None:
+    def draw(self: SceneManager, canvas: Surface) -> None:
         self.scene.draw(canvas)
 
     def mount(self: SceneManager) -> None:

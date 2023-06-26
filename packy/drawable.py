@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from abc import ABC
 
-from tkinter import Canvas
+from pygame import Surface
 
 
 class Drawable(ABC):
 
-    def draw(self: Drawable, canvas: Canvas) -> None:
+    def draw(self: Drawable, canvas: Surface) -> None:
         """
         Method to be overriden for drawings.
         """

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from typing import Set
-from tkinter import Canvas, Event
+from pygame.event import Event
+from pygame.constants import MOUSEBUTTONDOWN
 from abc import ABC, abstractmethod
 from logging import getLogger
 
@@ -44,14 +45,11 @@ class MouseSystem:
     cursor_position: RelativeVector
     coordinate_system: CoordinateSystem
 
-    def __init__(self: MouseSystem, canvas: Canvas, coordinate_system: CoordinateSystem) -> None:
+    def __init__(self: MouseSystem, coordinate_system: CoordinateSystem) -> None:
         self.motion_handlers = set()
         self.click_handlers = set()
         self.cursor_position = RelativeVector(0, 0)
         self.coordinate_system = coordinate_system
-
-        canvas.bind("<Motion>", self.motion)
-        canvas.bind("<Button-1>", self.click)
 
     def motion(self: MouseSystem, event: Event) -> None:
         new_cursor_position = self.coordinate_system.relative(
@@ -94,3 +92,8 @@ class MouseSystem:
 
     def remove_click_handler(self: MouseSystem, click_handler: ClickHandler) -> None:
         self.click_handlers.remove(click_handler)
+
+    def process(self: MouseSystem, event: Event) -> None:
+        if event.type == MOUSEBUTTONDOWN:
+            if event.button == 1:
+                pass # TODO(arwed)

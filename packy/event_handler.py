@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tkinter import Event
+from pygame.event import Event
 from typing import Callable
 
 

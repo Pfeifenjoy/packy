@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from tkinter import Canvas
+from pygame import Surface
 
 from .context import Context
 from .game_object import GameObject
@@ -26,5 +26,5 @@ class Scene(GameObject):
     def get_name(self: Scene) -> str:
         raise NotImplementedError()
 
-    def draw(self: Scene, canvas: Canvas) -> None:
+    def draw(self: Scene, canvas: Surface) -> None:
         self.rectangle.draw(canvas)

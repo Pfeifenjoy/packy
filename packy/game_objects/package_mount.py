@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 from random import randint
-from tkinter import Canvas
+from pygame import Surface
 from logging import getLogger
 
 from packy.game_object import GameObject
@@ -75,6 +75,6 @@ class PackageMount(GameObject):
         for package in set(self.packages):
             package.update(update)
 
-    def draw(self: PackageMount, canvas: Canvas) -> None:
+    def draw(self: PackageMount, canvas: Surface) -> None:
         for package in self.packages:
             package.draw(canvas)

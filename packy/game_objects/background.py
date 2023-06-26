@@ -1,12 +1,22 @@
 from __future__ import annotations
 
-from tkinter import Canvas
+from pygame import Surface
 from packy.game_object import GameObject
+from packy.context import Context
+from packy.shapes.box import Box
+from packy.vector import RelativeVector
+
+from .rectangle import Rectangle
 
 
 class Background(GameObject):
-    def draw(self: Background, canvas: Canvas) -> None:
-        width = self.context.coordinate_system.get_width()
-        height = self.context.coordinate_system.get_height()
+    rectangle: Rectangle
 
-        canvas.create_rectangle(0, 0, width, height, fill="#EBEEEB")
+    def __init__(self: Background, context: Context):
+        self.rectangle = Rectangle(
+            context, Box(RelativeVector(0, 0), RelativeVector(1000000, 1000000)),
+            fill="#EBEEEB", outline="#EBEEEB"
+        )
+
+    def draw(self: Background, canvas: Surface) -> None:
+        self.rectangle.draw(canvas)

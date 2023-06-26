@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from tkinter import Canvas, Event
+from tkinter import Event
+from pygame import Surface
 from datetime import timedelta
 from logging import getLogger
 
@@ -73,7 +74,7 @@ class Character(GameObject):
             self.get_motion(update.elapsed_time)
         )
 
-    def draw(self: Character, canvas: Canvas) -> None:
+    def draw(self: Character, canvas: Surface) -> None:
 
         body = Rectangle(
             self.context,

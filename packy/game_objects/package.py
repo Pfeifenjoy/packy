@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tkinter import Canvas
+from pygame import Surface
 from typing import Callable
 
 from packy.game_object import GameObject
@@ -53,6 +53,6 @@ class Package(GameObject):
     def get_box(self: Package) -> Box:
         return Box(self.position, self.dimensions)
 
-    def draw(self: Package, canvas: Canvas) -> None:
+    def draw(self: Package, canvas: Surface) -> None:
         rectangle = Rectangle(self.context, self.get_box(), fill="blue")
         rectangle.draw(canvas)

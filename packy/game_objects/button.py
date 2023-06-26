@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tkinter.font import Font
 from typing import Optional, Callable, List
 
 from packy.game_object import StructuralGameObject, GameObject
@@ -45,8 +44,7 @@ class Button(StructuralGameObject, MotionHandler):
             context: Context,
             box: Box,
             text: str,
-            on_click: Callable[[RelativeVector], None],
-            font: Optional[Font] = None
+            on_click: Callable[[RelativeVector], None]
     ) -> None:
         super().__init__(context)
 
@@ -62,8 +60,7 @@ class Button(StructuralGameObject, MotionHandler):
             Text(
                 context,
                 self.box.center(),
-                text,
-                font or Font(size=context.coordinate_system.absolute_y(30000))
+                text
             )
         )
 

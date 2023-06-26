@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from tkinter import Tk, Canvas
 from datetime import datetime
 from time import sleep
 from logging import getLogger
+import pygame
 
 from .settings import Settings
 from .coordinate_system import CoordinateSystem
@@ -32,18 +32,13 @@ class Engine:
 
     def run(self: Engine) -> None:
         logger.info("Starting engine")
-        root = Tk()
-
-        canvas = Canvas(
-            root,
-            width=self.settings.width,
-            height=self.settings.height
-        )
-        canvas.pack(expand=True)
+        pygame.init()
+        screen = pygame.display.set_mode([self.settings.width, self.settings.height])
+        clock = pygame.time.Clock()
 
         coordinate_system = CoordinateSystem(self.settings)
-        mouse_system = MouseSystem(canvas, coordinate_system)
-        key_system = KeySystem(root)
+        mouse_system = MouseSystem(coordinate_system)
+        key_system = KeySystem()
 
         context = Context(
             coordinate_system,
@@ -53,13 +48,16 @@ class Engine:
         )
 
         scene_manager = SceneManager(context)
-        root.protocol("WM_DELETE_WINDOW", self.stop)
-
         scene_manager.mount()
 
         last_update = datetime.now()
 
         while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.stop()
+                    continue
+                mouse_system.process(event)
 
             now = datetime.now()
             update = Update(
@@ -68,11 +66,10 @@ class Engine:
             last_update = now
 
             scene_manager.update(update)
-            scene_manager.draw(canvas)
+            scene_manager.draw(screen)
 
-            root.update()
-
-            self.sync()
+            pygame.display.flip()
+            clock.tick(self.settings.fps)
 
         scene_manager.unmount()
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from tkinter import Canvas
+from pygame import Surface
 from typing import List
 
 from .context import Context
@@ -48,7 +48,7 @@ class StructuralGameObject(GameObject, ABC):
         for child in self.children:
             child.update(update)
 
-    def draw(self: StructuralGameObject, canvas: Canvas) -> None:
+    def draw(self: StructuralGameObject, canvas: Surface) -> None:
         for child in self.children:
             child.draw(canvas)
 
