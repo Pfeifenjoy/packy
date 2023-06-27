@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from logging import getLogger
 from typing import Callable
 from pygame import Surface, Color, Vector2, draw
 
 from packy.game_object import GameObject
 from packy.vector import RelativeVector
 from packy.context import Context
+
+
+logger = getLogger(__name__)
 
 
 class Lives(GameObject):
@@ -17,6 +21,7 @@ class Lives(GameObject):
         self.on_no_lives = on_no_lives
 
     def decrease(self: Lives) -> None:
+        logger.info("Lost live.")
         self.lives = max(0, self.lives - 1)
 
         if self.lives == 0:
