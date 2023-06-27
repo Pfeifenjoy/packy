@@ -6,7 +6,7 @@ from pygame import Surface
 from .game_object import GameObject
 from .context import Context
 from .scene import Scene
-from .scenes import Menu, Game
+from .scenes import Menu, Game, GameOver
 from .update import Update
 
 
@@ -22,7 +22,10 @@ class SceneManager(GameObject):
         self.scene = Menu(self.context, on_play=self.start_game)
 
     def start_game(self: SceneManager) -> None:
-        self.update_scene(Game(self.context))
+        self.update_scene(Game(self.context, self.game_over))
+
+    def game_over(self: SceneManager) -> None:
+        self.update_scene(GameOver(self.context, self.start_game))
 
     def update(self: SceneManager, update: Update) -> None:
         self.scene.update(update)

@@ -11,12 +11,15 @@ from packy.update import Update
 from packy.vector import RelativeVector
 
 from .package import Package
+from .lives import Lives
 
 
 logger = getLogger(__name__)
 
 
 class PackageMount(GameObject):
+
+    lives: Lives
 
     packages: Set[Package]
 
@@ -27,8 +30,9 @@ class PackageMount(GameObject):
     cursor: int
     velocity: int
 
-    def __init__(self: PackageMount, context: Context) -> None:
+    def __init__(self: PackageMount, context: Context, lives: Lives) -> None:
         super().__init__(context)
+        self.lives = lives
         self.packages = set()
 
         self.positions = 40
@@ -41,6 +45,7 @@ class PackageMount(GameObject):
     def destroy_package(self: PackageMount, package: Package) -> None:
         logger.info("Destroy package.")
         self.packages.remove(package)
+        self.lives.decrease()
 
     def generate_package(self: PackageMount) -> Package:
         logger.info("Generate package.")
@@ -80,4 +85,5 @@ class PackageMount(GameObject):
             package.draw(canvas)
 
     def remove_package(self: PackageMount, package: Package) -> None:
-        self.destroy_package(package)
+        logger.info("Remove package.")
+        self.packages.remove(package)

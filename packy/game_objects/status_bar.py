@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Callable
 from pygame import Surface, Color
 
 from packy.game_object import GameObject
@@ -8,6 +9,7 @@ from packy.shapes import Box
 from packy.vector import RelativeVector
 
 from .score import Score
+from .lives import Lives
 from .rectangle import Rectangle
 
 
@@ -15,9 +17,14 @@ class StatusBar(GameObject):
     background: Rectangle
     score: Score
 
-    def __init__(self: StatusBar, context: Context) -> None:
+    def __init__(
+        self: StatusBar,
+        context: Context,
+        on_no_lives: Callable[[], None]
+    ) -> None:
         super().__init__(context)
         self.score = Score(context)
+        self.lives = Lives(context, on_no_lives)
         self.background = Rectangle(
             context,
             Box(RelativeVector(0, 0), RelativeVector(1000000, 50000)),
@@ -28,3 +35,4 @@ class StatusBar(GameObject):
     def draw(self: StatusBar, canvas: Surface) -> None:
         self.background.draw(canvas)
         self.score.draw(canvas)
+        self.lives.draw(canvas)
