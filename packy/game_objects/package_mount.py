@@ -28,7 +28,10 @@ class PackageMount(GameObject):
     package_height: int
 
     cursor: int
-    velocity: int
+    velocity = 50000  # cords / sec
+    spawn_rate = 7
+
+    spawned_packages = 0
 
     def __init__(self: PackageMount, context: Context, game_state: GameState) -> None:
         super().__init__(context)
@@ -40,7 +43,6 @@ class PackageMount(GameObject):
         self.package_height = int(self.package_width * self.context.coordinate_system.get_ratio())
 
         self.cursor = 0
-        self.velocity = 50000  # cords / sec
 
     def destroy_package(self: PackageMount, package: Package) -> None:
         logger.info("Destroy package.")
@@ -49,7 +51,7 @@ class PackageMount(GameObject):
 
     def generate_package(self: PackageMount) -> Package:
         logger.info("Generate package.")
-        location = randint(0, self.positions)
+        location = randint(0, self.positions - 1)
         position = RelativeVector(
             int(location * self.package_width),
             int(-1 * self.package_height)
@@ -57,13 +59,19 @@ class PackageMount(GameObject):
 
         package = Package(
             self.context,
+            self.spawned_packages,
             position,
             self.package_width,
-            self.velocity,
-            self.destroy_package
+            self.velocity
         )
 
         self.packages.add(package)
+        self.spawned_packages += 1
+
+        self.velocity = min(200000, self.velocity + 1000)
+
+        if self.spawned_packages % 20 == 0:
+            self.spawn_rate = max(self.spawn_rate - 1, 3)
 
         return package
 
@@ -71,14 +79,22 @@ class PackageMount(GameObject):
         # generate new packages
         self.cursor += int(self.velocity * (update.elapsed_time.microseconds / 1000000))
 
-        if self.cursor >= self.package_height:
+        if self.cursor >= self.package_height * self.spawn_rate:
             self.generate_package()
 
             self.cursor = 0
 
         # update packages
-        for package in set(self.packages):
+        for package in self.packages:
             package.update(update)
+
+        destroyable_packages = [
+            package for package in self.packages
+            if package.position.get_y() > 1000000
+        ]
+
+        for package in destroyable_packages:
+            self.destroy_package(package)
 
     def draw(self: PackageMount, canvas: Surface) -> None:
         for package in self.packages:
