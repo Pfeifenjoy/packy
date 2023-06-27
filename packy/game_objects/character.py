@@ -14,6 +14,7 @@ from packy.update import Update
 
 from .rectangle import Rectangle
 from .package_mount import PackageMount
+from .score import Score
 
 
 logger = getLogger(__name__)
@@ -28,12 +29,14 @@ class Character(GameObject):
     direction: RelativeVector = RelativeVector(0, 0)
 
     package_mount: PackageMount
+    score: Score
 
     def __init__(
             self: Character,
             context: Context,
             start_position: RelativeVector,
-            package_mount: PackageMount
+            package_mount: PackageMount,
+            score: Score
     ) -> None:
         super().__init__(context)
 
@@ -42,6 +45,7 @@ class Character(GameObject):
             self.context.coordinate_system.quad(50000)
         )
         self.package_mount = package_mount
+        self.score = score
 
     def mount(self: Character) -> None:
         self.context.key_system.register_keypress_handler(self.handle_keypress)
@@ -85,6 +89,7 @@ class Character(GameObject):
 
         for package in collided_packages:
             self.package_mount.remove_package(package)
+            self.score.increment()
 
     def draw(self: Character, canvas: Surface) -> None:
 

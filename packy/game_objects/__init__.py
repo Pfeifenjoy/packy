@@ -5,6 +5,8 @@ from .text import Text
 from .character import Character
 from .package import Package
 from .package_mount import PackageMount
+from .score import Score
+from .status_bar import StatusBar
 
 
 __all__ = [
@@ -14,5 +16,7 @@ __all__ = [
     "Text",
     "Character",
     "Package",
-    "PackageMount"
+    "PackageMount",
+    "Score",
+    "StatusBar"
 ]
