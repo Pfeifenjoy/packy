@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Callable, List
+from pygame import Color
 
 from packy.game_object import StructuralGameObject, GameObject
 from packy.context import Context
@@ -53,7 +54,7 @@ class Button(StructuralGameObject, MotionHandler):
         self.rectangle = Rectangle(
             self.context,
             self.box,
-            fill="#B4ADD9"
+            fill=Color(180, 173, 217)
         )
         self.add_child(self.rectangle)
         self.add_child(
@@ -89,6 +90,6 @@ class Button(StructuralGameObject, MotionHandler):
 
     def handle_motion(self: Button, start: RelativeVector, end: RelativeVector) -> None:
         if self.box.inside(end):
-            self.rectangle.fill = "#9C92CD"
+            self.rectangle.fill = Color(156, 146, 205)
         else:
-            self.rectangle.fill = "#B4ADD9"
+            self.rectangle.fill = Color(180, 173, 217)

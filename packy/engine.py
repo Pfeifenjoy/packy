@@ -61,6 +61,7 @@ class Engine:
                     self.stop()
                     continue
                 mouse_system.process(event)
+                key_system.process(event)
 
             screen.fill([255, 255, 255])
 

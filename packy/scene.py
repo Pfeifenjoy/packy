@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
+import pygame
 from pygame import Surface
 
 from .context import Context
@@ -19,7 +20,7 @@ class Scene(GameObject):
 
         self.rectangle = Rectangle(
             context, Box(RelativeVector(0, 0), RelativeVector(1, 1)),
-            fill="white", outline="white"
+            fill=pygame.Color(255, 255, 255), outline=pygame.Color(255, 255, 255)
         )
 
     @abstractmethod

@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from datetime import timedelta
 from logging import getLogger
+from pygame import Surface, Color
 from pygame.event import Event
-from pygame import Surface
+from pygame.constants import K_LEFT, K_RIGHT, K_UP, K_DOWN
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -45,17 +46,16 @@ class Character(GameObject):
         self.context.key_system.unregister_keyrelease_handler(self.handle_keyrelease)
 
     def get_key_direction(self: Character, event: Event) -> RelativeVector:
-        match event.keysym:
-            case "Up":
-                return RelativeVector(0, -1)
-            case "Down":
-                return RelativeVector(0, 1)
-            case "Left":
-                return RelativeVector(-1, 0)
-            case "Right":
-                return RelativeVector(1, 0)
-            case _:
-                return RelativeVector(0, 0)
+        if event.key == K_UP:
+            return RelativeVector(0, -1)
+        if event.key == K_DOWN:
+            return RelativeVector(0, 1)
+        if event.key == K_LEFT:
+            return RelativeVector(-1, 0)
+        if event.key == K_RIGHT:
+            return RelativeVector(1, 0)
+
+        return RelativeVector(0, 0)
 
     def handle_keypress(self: Character, event: Event) -> None:
         self.direction = self.direction.add(self.get_key_direction(event))
@@ -79,7 +79,7 @@ class Character(GameObject):
         body = Rectangle(
             self.context,
             Box(self.get_position(), self.dimension),
-            fill="blue"
+            fill=Color(0, 0, 255)
         )
 
         body.draw(canvas)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pygame import Surface
 from typing import Callable
+from pygame import Surface, Color
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -54,5 +54,9 @@ class Package(GameObject):
         return Box(self.position, self.dimensions)
 
     def draw(self: Package, canvas: Surface) -> None:
-        rectangle = Rectangle(self.context, self.get_box(), fill="blue")
+        rectangle = Rectangle(
+            self.context,
+            self.get_box(),
+            fill=Color(0, 0, 255)
+        )
         rectangle.draw(canvas)

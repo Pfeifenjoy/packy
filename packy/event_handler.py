@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pygame.event import Event
 from typing import Callable
+from pygame.event import Event
 
 
 EventHandler = Callable[[Event], None]
