@@ -13,11 +13,13 @@ class Game(StructuralGameObject, Scene):
         super().__init__(context)
 
         self.add_child(Background(context))
+        package_mount = PackageMount(self.context)
+        self.add_child(package_mount)
         self.add_child(Character(
             context,
-            RelativeVector(500000, 500000)
+            RelativeVector(500000, 500000),
+            package_mount
         ))
-        self.add_child(PackageMount(self.context))
 
     def get_name(self: Game) -> str:
         return "Game"

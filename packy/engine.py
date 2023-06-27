@@ -12,6 +12,7 @@ from .mouse_system import MouseSystem
 from .scene_manager import SceneManager
 from .key_system import KeySystem
 from .update import Update
+from .collision_system import CollisionSystem
 
 logger = getLogger(__name__)
 
@@ -43,11 +44,14 @@ class Engine:
         mouse_system = MouseSystem(coordinate_system)
         key_system = KeySystem()
 
+        collision_system = CollisionSystem(coordinate_system)
+
         context = Context(
             coordinate_system,
             mouse_system,
             key_system,
-            self.settings
+            self.settings,
+            collision_system
         )
 
         scene_manager = SceneManager(context)

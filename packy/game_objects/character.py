@@ -13,6 +13,7 @@ from packy.shapes import Box
 from packy.update import Update
 
 from .rectangle import Rectangle
+from .package_mount import PackageMount
 
 
 logger = getLogger(__name__)
@@ -20,22 +21,27 @@ logger = getLogger(__name__)
 
 class Character(GameObject):
 
-    center: RelativeVector
-    dimension: RelativeVector
+    box: Box
 
     speed: float = 200000  # cord / sec
 
     direction: RelativeVector = RelativeVector(0, 0)
 
+    package_mount: PackageMount
+
     def __init__(
             self: Character,
             context: Context,
-            start_position: RelativeVector
+            start_position: RelativeVector,
+            package_mount: PackageMount
     ) -> None:
         super().__init__(context)
 
-        self.center = start_position
-        self.dimension = self.context.coordinate_system.quad(50000)
+        self.box = Box(
+            start_position,
+            self.context.coordinate_system.quad(50000)
+        )
+        self.package_mount = package_mount
 
     def mount(self: Character) -> None:
         self.context.key_system.register_keypress_handler(self.handle_keypress)
@@ -67,18 +73,24 @@ class Character(GameObject):
         return self.direction.resize(int(self.speed * (elapsed_time.microseconds / 1000000)))
 
     def get_position(self: Character) -> RelativeVector:
-        return self.center.minus(self.dimension.scale(0.5))
+        return self.box.center().minus(self.box.get_dimensions().scale(0.5))
 
     def update(self: Character, update: Update) -> None:
-        self.center = self.center.add(
-            self.get_motion(update.elapsed_time)
-        )
+        self.box.move(self.get_motion(update.elapsed_time))
+
+        collided_packages = [
+            package for package in self.package_mount.packages
+            if self.context.collision_system.collides(self.box, package.get_box())
+        ]
+
+        for package in collided_packages:
+            self.package_mount.remove_package(package)
 
     def draw(self: Character, canvas: Surface) -> None:
 
         body = Rectangle(
             self.context,
-            Box(self.get_position(), self.dimension),
+            Box(self.get_position(), self.box.get_dimensions()),
             fill=Color(0, 0, 255)
         )
 

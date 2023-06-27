@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Set
 from random import randint
-from pygame import Surface
 from logging import getLogger
+from pygame import Surface
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -78,3 +78,6 @@ class PackageMount(GameObject):
     def draw(self: PackageMount, canvas: Surface) -> None:
         for package in self.packages:
             package.draw(canvas)
+
+    def remove_package(self: PackageMount, package: Package) -> None:
+        self.destroy_package(package)

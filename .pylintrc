@@ -1,4 +1,4 @@
 [MASTER]
-disable=C0114,C0115,C0116,R0913,too-few-public-methods
-extension-pkg-whitelist=pydantic
+disable=C0114,C0115,C0116,R0913,too-few-public-methods,W1114
+extension-pkg-whitelist=pydantic,pygame
 good-names=x,y

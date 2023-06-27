@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC
-from pygame import Surface
 from typing import List
+from pygame import Surface
 
 from .context import Context
 from .update import Update

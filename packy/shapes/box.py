@@ -23,6 +23,9 @@ class Box(Shape):
     def center(self: Box) -> RelativeVector:
         return self.position.add(self.dimensions.scale(0.5))
 
+    def move(self: Box, motion: RelativeVector) -> None:
+        self.position = self.position.add(motion)
+
     def get_position(self: Box) -> RelativeVector:
         return self.position
 

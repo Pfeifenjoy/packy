@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from typing import Set
+from logging import getLogger
 from pygame.event import Event
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
-from abc import ABC, abstractmethod
-from logging import getLogger
 
 from .vector import RelativeVector, AbsoluteVector
 from .shape import Shape

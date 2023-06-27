@@ -13,6 +13,7 @@ class Background(GameObject):
     rectangle: Rectangle
 
     def __init__(self: Background, context: Context):
+        super().__init__(context)
         self.rectangle = Rectangle(
             context, Box(RelativeVector(0, 0), RelativeVector(1000000, 1000000)),
             fill=Color(255, 255, 255), outline=Color(255, 255, 255)
