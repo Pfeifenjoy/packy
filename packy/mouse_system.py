@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 from pygame.event import Event
-from pygame.constants import MOUSEBUTTONDOWN
+from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 from abc import ABC, abstractmethod
 from logging import getLogger
 
@@ -53,7 +53,7 @@ class MouseSystem:
 
     def motion(self: MouseSystem, event: Event) -> None:
         new_cursor_position = self.coordinate_system.relative(
-            AbsoluteVector(event.x, event.y)
+            AbsoluteVector(event.pos[0], event.pos[1])
         )
 
         for motion_handler in self.motion_handlers:
@@ -65,12 +65,12 @@ class MouseSystem:
 
     def click(self: MouseSystem, event: Event) -> None:
         point = self.coordinate_system.relative(
-            AbsoluteVector(event.x, event.y)
+            AbsoluteVector(event.pos[0], event.pos[1])
         )
 
         logger.debug(
             "Click event at absolute (%s, %s) relative (%s, %s)",
-            event.x, event.y,
+            event.pos[0], event.pos[1],
             point.get_x(), point.get_y()
         )
 
@@ -96,4 +96,6 @@ class MouseSystem:
     def process(self: MouseSystem, event: Event) -> None:
         if event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
-                pass  # TODO(arwed)
+                self.click(event)
+        elif event.type == MOUSEMOTION:
+            self.motion(event)

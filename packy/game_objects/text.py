@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from typing import Optional
 from pygame import Surface
 from pygame.font import SysFont, Font, get_default_font
 from pygame import Color
-from typing import Optional
 
 from packy.game_object import GameObject
 from packy.context import Context
@@ -32,4 +32,8 @@ class Text(GameObject):
         position = self.context.coordinate_system.absolute(self.position)
 
         image = self.font.render(self.text, True, Color(0, 0, 0))
-        canvas.blit(image, (position.get_x(), position.get_y()))
+        image.get_height()
+        canvas.blit(image, (
+            position.get_x() - image.get_width() / 2,
+            position.get_y() - image.get_height() / 2
+        ))

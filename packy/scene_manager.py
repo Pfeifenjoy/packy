@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pygame import Surface
 from logging import getLogger
+from pygame import Surface
 
 from .game_object import GameObject
 from .context import Context

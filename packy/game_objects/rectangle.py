@@ -11,28 +11,36 @@ from packy.shapes import Box
 class Rectangle(GameObject):
     box: Box
 
-    fill: Optional[str]
-    outline: Optional[str]
+    fill: Color
+    outline: Color
+    outline_width: int
 
     def __init__(
             self: Rectangle,
             context: Context,
             box: Box,
-            fill: Optional[str] = None,
-            outline: Optional[str] = None
+            fill: Optional[Color] = None,
+            outline: Optional[Color] = None
     ) -> None:
         super().__init__(context)
         self.box = box
-        self.fill = fill
-        self.outline = outline
+        self.fill = fill or Color(0, 0, 0)
+        self.outline = outline or Color(0, 0, 0)
+        self.outline_width = 1
 
     def draw(self: Rectangle, canvas: Surface) -> None:
         absolute_position = self.context.coordinate_system.absolute(self.box.position)
         absolute_dimensions = self.context.coordinate_system.absolute(self.box.dimensions)
 
-        draw.rect(canvas, Color(0, 0, 0), Rect(
+        draw.rect(canvas, self.outline, Rect(
             absolute_position.get_x(),
             absolute_position.get_y(),
-            absolute_position.add(absolute_dimensions).get_x(),
-            absolute_position.add(absolute_dimensions).get_y()
+            absolute_dimensions.get_x(),
+            absolute_dimensions.get_y()
+        ))
+        draw.rect(canvas, self.fill, Rect(
+            absolute_position.get_x() + self.outline_width,
+            absolute_position.get_y() + self.outline_width,
+            absolute_dimensions.get_x() - 2 * self.outline_width,
+            absolute_dimensions.get_y() - 2 * self.outline_width
         ))

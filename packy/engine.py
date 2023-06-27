@@ -33,7 +33,10 @@ class Engine:
     def run(self: Engine) -> None:
         logger.info("Starting engine")
         pygame.init()
-        screen = pygame.display.set_mode([self.settings.width, self.settings.height])
+        screen = pygame.display.set_mode([
+            self.settings.width,
+            self.settings.height
+        ])
         clock = pygame.time.Clock()
 
         coordinate_system = CoordinateSystem(self.settings)
@@ -58,6 +61,8 @@ class Engine:
                     self.stop()
                     continue
                 mouse_system.process(event)
+
+            screen.fill([255, 255, 255])
 
             now = datetime.now()
             update = Update(

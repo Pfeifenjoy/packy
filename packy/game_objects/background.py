@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pygame import Surface
+from pygame import Surface, Color
 from packy.game_object import GameObject
 from packy.context import Context
 from packy.shapes.box import Box
@@ -15,7 +15,7 @@ class Background(GameObject):
     def __init__(self: Background, context: Context):
         self.rectangle = Rectangle(
             context, Box(RelativeVector(0, 0), RelativeVector(1000000, 1000000)),
-            fill="#EBEEEB", outline="#EBEEEB"
+            fill=Color(255, 255, 255), outline=Color(255, 255, 255)
         )
 
     def draw(self: Background, canvas: Surface) -> None:
