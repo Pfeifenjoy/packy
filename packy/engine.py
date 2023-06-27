@@ -34,6 +34,7 @@ class Engine:
     def run(self: Engine) -> None:
         logger.info("Starting engine")
         pygame.init()
+        pygame.display.set_caption("Packy")
         screen = pygame.display.set_mode([
             self.settings.width,
             self.settings.height
