@@ -57,6 +57,7 @@ class Package(GameObject):
         rectangle = Rectangle(
             self.context,
             self.get_box(),
-            fill=Color(0, 0, 255)
+            fill=Color(160, 117, 88),
+            outline=Color(115, 83, 62)
         )
         rectangle.draw(canvas)

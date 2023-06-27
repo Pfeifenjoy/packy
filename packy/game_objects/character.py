@@ -96,7 +96,7 @@ class Character(GameObject):
         body = Rectangle(
             self.context,
             Box(self.get_position(), self.box.get_dimensions()),
-            fill=Color(0, 0, 255)
+            fill=Color(153, 153, 255)
         )
 
         body.draw(canvas)
