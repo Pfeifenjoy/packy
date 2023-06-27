@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Callable, List
+from typing import Callable, List
 
 from packy.game_object import StructuralGameObject, GameObject
 from packy.context import Context

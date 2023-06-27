@@ -96,4 +96,4 @@ class MouseSystem:
     def process(self: MouseSystem, event: Event) -> None:
         if event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
-                pass # TODO(arwed)
+                pass  # TODO(arwed)

@@ -16,9 +16,9 @@ class KeySystem:
         self.keyrelease_event_handlers = set()
 
     def handle_key_press(self: KeySystem, event: Event) -> None:
-        pass # TODO
+        pass  # TODO
         for handler in self.keypress_event_handlers:
-               handler(event)
+            handler(event)
 
     def register_keypress_handler(self: KeySystem, event_handler: EventHandler) -> None:
         self.keypress_event_handlers.add(event_handler)

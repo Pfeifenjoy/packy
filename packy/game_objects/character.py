@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from tkinter import Event
-from pygame import Surface
 from datetime import timedelta
 from logging import getLogger
+from pygame.event import Event
+from pygame import Surface
 
 from packy.game_object import GameObject
 from packy.context import Context
