@@ -70,13 +70,29 @@ class Character(GameObject):
         self.direction = self.direction.minus(self.get_key_direction(event))
 
     def get_motion(self: Character, elapsed_time: timedelta) -> RelativeVector:
-        return self.direction.resize(int(self.speed * (elapsed_time.microseconds / 1000000)))
+        return self.direction.resize(
+            int(self.speed * (elapsed_time.microseconds / 1000000))
+        )
 
     def get_position(self: Character) -> RelativeVector:
         return self.box.center().minus(self.box.get_dimensions().scale(0.5))
 
     def update(self: Character, update: Update) -> None:
         self.box.move(self.get_motion(update.elapsed_time))
+
+        self.box = Box(
+            RelativeVector(
+                min(
+                    max(self.box.get_position().get_x(), 0),
+                    1000000 - self.box.get_dimensions().get_x()
+                ),
+                min(
+                    max(self.box.get_position().get_y(), 50000),
+                    1000000 - self.box.get_dimensions().get_y()
+                )
+            ),
+            self.box.get_dimensions()
+        )
 
         collided_packages = [
             package for package in self.package_mount.packages
