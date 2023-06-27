@@ -8,6 +8,7 @@ from .context import Context
 from .scene import Scene
 from .scenes import Menu, Game, GameOver
 from .update import Update
+from .game_state import GameState
 
 
 logger = getLogger(__name__)
@@ -24,8 +25,8 @@ class SceneManager(GameObject):
     def start_game(self: SceneManager) -> None:
         self.update_scene(Game(self.context, self.game_over))
 
-    def game_over(self: SceneManager) -> None:
-        self.update_scene(GameOver(self.context, self.start_game))
+    def game_over(self: SceneManager, game_state: GameState) -> None:
+        self.update_scene(GameOver(self.context, game_state, self.start_game))
 
     def update(self: SceneManager, update: Update) -> None:
         self.scene.update(update)

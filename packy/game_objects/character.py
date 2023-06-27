@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from datetime import timedelta
-from logging import getLogger
 from pygame import Surface, Color
 from pygame.event import Event
 from pygame.constants import K_LEFT, K_RIGHT, K_UP, K_DOWN
@@ -11,13 +10,10 @@ from packy.context import Context
 from packy.vector import RelativeVector
 from packy.shapes import Box
 from packy.update import Update
+from packy.game_state import GameState
 
 from .rectangle import Rectangle
 from .package_mount import PackageMount
-from .score import Score
-
-
-logger = getLogger(__name__)
 
 
 class Character(GameObject):
@@ -28,24 +24,24 @@ class Character(GameObject):
 
     direction: RelativeVector = RelativeVector(0, 0)
 
+    game_state: GameState
     package_mount: PackageMount
-    score: Score
 
     def __init__(
             self: Character,
             context: Context,
             start_position: RelativeVector,
-            package_mount: PackageMount,
-            score: Score
+            game_state: GameState,
+            package_mount: PackageMount
     ) -> None:
         super().__init__(context)
+        self.game_state = game_state
+        self.package_mount = package_mount
 
         self.box = Box(
             start_position,
             self.context.coordinate_system.quad(50000)
         )
-        self.package_mount = package_mount
-        self.score = score
 
     def mount(self: Character) -> None:
         self.context.key_system.register_keypress_handler(self.handle_keypress)
@@ -89,7 +85,7 @@ class Character(GameObject):
 
         for package in collided_packages:
             self.package_mount.remove_package(package)
-            self.score.increment()
+            self.game_state.increase_score()
 
     def draw(self: Character, canvas: Surface) -> None:
 

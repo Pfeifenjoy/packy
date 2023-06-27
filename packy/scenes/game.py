@@ -7,15 +7,21 @@ from packy.game_object import StructuralGameObject
 from packy.context import Context
 from packy.game_objects import Character, Background, PackageMount, StatusBar
 from packy.vector import RelativeVector
+from packy.game_state import GameState
 
 
 class Game(StructuralGameObject, Scene):
 
-    def __init__(self: Game, context: Context, on_game_over: Callable[[], None]) -> None:
+    def __init__(
+        self: Game,
+        context: Context,
+        on_game_over: Callable[[GameState], None]
+    ) -> None:
         super().__init__(context)
 
-        status_bar = StatusBar(context, on_game_over)
-        package_mount = PackageMount(self.context, status_bar.lives)
+        game_state = GameState(on_game_over)
+        status_bar = StatusBar(context, game_state)
+        package_mount = PackageMount(self.context, game_state)
 
         self.add_child(Background(context))
         self.add_child(package_mount)
@@ -23,8 +29,8 @@ class Game(StructuralGameObject, Scene):
         self.add_child(Character(
             context,
             RelativeVector(500000, 500000),
-            package_mount,
-            status_bar.score
+            game_state,
+            package_mount
         ))
 
     def get_name(self: Game) -> str:

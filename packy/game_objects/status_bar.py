@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Callable
 from pygame import Surface, Color
 
 from packy.game_object import GameObject
 from packy.context import Context
 from packy.shapes import Box
 from packy.vector import RelativeVector
+from packy.game_state import GameState
 
 from .score import Score
 from .lives import Lives
@@ -20,11 +20,11 @@ class StatusBar(GameObject):
     def __init__(
         self: StatusBar,
         context: Context,
-        on_no_lives: Callable[[], None]
+        game_state: GameState
     ) -> None:
         super().__init__(context)
-        self.score = Score(context)
-        self.lives = Lives(context, on_no_lives)
+        self.score = Score(context, game_state)
+        self.lives = Lives(context, game_state)
         self.background = Rectangle(
             context,
             Box(RelativeVector(0, 0), RelativeVector(1000000, 50000)),
