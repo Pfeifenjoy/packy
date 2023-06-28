@@ -101,7 +101,6 @@ class Character(GameObject):
 
         for package in collided_packages:
             self.package_mount.remove_package(package)
-            self.game_state.increase_score()
 
     def draw(self: Character, canvas: Surface) -> None:
 

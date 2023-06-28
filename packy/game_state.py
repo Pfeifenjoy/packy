@@ -8,8 +8,8 @@ logger = getLogger(__name__)
 
 
 class GameState:
+    # TODO track the score in this class
 
-    score = 0
     lives = 3
 
     on_game_over: Callable[[GameState], None]
@@ -17,9 +17,9 @@ class GameState:
     def __init__(self: GameState, on_game_over: Callable[[GameState], None]) -> None:
         self.on_game_over = on_game_over
 
-    def increase_score(self: GameState) -> None:
-        self.score += 1
-        logger.info("Score increased to %s.", self.score)
+    def get_score(self: GameState) -> int:
+        # TODO return score
+        return 0
 
     def decrease_lives(self: GameState) -> None:
         self.lives = max(0, self.lives - 1)
@@ -27,3 +27,4 @@ class GameState:
 
         if self.lives == 0:
             self.on_game_over(self)
+

@@ -6,7 +6,6 @@ from .coordinate_system import CoordinateSystem
 from .shape import Shape
 from .shapes import Box
 from .shape_types import ShapeTypes
-from .vector import RelativeVector
 
 
 class CollisionSystem:
@@ -22,16 +21,8 @@ class CollisionSystem:
         raise NotImplementedError()
 
     def collides_box(self: CollisionSystem, box1: Box, box2: Box) -> bool:
-        return self.any_corner_inside(box1, box2) or self.any_corner_inside(box2, box1)
+        # Add code to check that box1 collides with box 2
 
-    def any_corner_inside(self: CollisionSystem, box1: Box, box2: Box) -> bool:
-        position = box1.get_position()
-        dimensions = box1.get_dimensions()
+        # The function should return True if both boxes overlap and false if they do not.
 
-        top_left = position
-        top_right = position.add(RelativeVector(dimensions.get_x(), 0))
-        bottom_left = position.add(RelativeVector(0, dimensions.get_y()))
-        bottom_right = position.add(dimensions)
-
-        return box2.inside(top_left) or box2.inside(top_right) \
-            or box2.inside(bottom_left) or box2.inside(bottom_right)
+        return False

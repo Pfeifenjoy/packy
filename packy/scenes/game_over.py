@@ -34,7 +34,7 @@ class GameOver(StructuralGameObject, Scene):
         score = Text(
             context,
             RelativeVector(500000, 270000),
-            "Your Score: " + str(game_state.score),
+            "Your Score: " + str(game_state.get_score()),
             SysFont(get_default_font(), 35)
         )
 

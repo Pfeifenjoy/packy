@@ -20,7 +20,6 @@ class Score(GameObject):
         self.game_state = game_state
 
     def draw(self: Score, canvas: Surface) -> None:
-        position = RelativeVector(930000, 25000)
-        raw_text = "Score: " + str(self.game_state.score)
-        text = Text(self.context, position, raw_text)
-        text.draw(canvas)
+        # TODO draw the score to the top right of the Screen
+        # You can read the score from the game state.
+        pass

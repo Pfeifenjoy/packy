@@ -16,18 +16,5 @@ class Lives(GameObject):
         self.game_state = game_state
 
     def draw(self: Lives, canvas: Surface) -> None:
-        position = RelativeVector(20000, 25000)
-
-        for offset in range(self.game_state.lives):
-            relative_position = position.add(
-                RelativeVector(30000 * offset, 0)
-            )
-            draw.circle(
-                canvas,
-                Color(200, 30, 30),
-                Vector2(
-                    self.context.coordinate_system.absolute_x(relative_position.get_x()),
-                    self.context.coordinate_system.absolute_y(relative_position.get_y())
-                ),
-                self.context.coordinate_system.absolute_x(10000)
-            )
+        # TODO draw lives on the left side of the top bar.
+        pass
